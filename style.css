@@ -76,27 +76,13 @@
     #hero {
       min-height: 100vh;
       background:
-        linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.75) 1500%),
-        url(PhotoHero2.jpg) center/cover no-repeat;
+        
+        url(PhotoHero6.jpg) center/cover no-repeat;
       display: flex; align-items: center; justify-content: flex-end;
       padding: 0 8% 0 0;
       position: relative;
     }
-    /* Teal wave décor left (like img 13/14) */
-    .hero-deco-left {
-      position: absolute; left: 0; bottom: 0; top: 0;
-      width: 12px;
-      background: var(--teal);
-    }
-    .hero-deco-left::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: repeating-linear-gradient(
-        180deg,
-        var(--teal) 0px, var(--teal) 12px,
-        var(--teal2) 12px, var(--teal2) 24px
-      );
-    }
+ 
 
     .hero-card {
       background: var(--yellow);
@@ -105,6 +91,7 @@
       padding: 44px 52px;
       max-width: 480px;
       position: flex; flex-direction:left; align-items: left;
+      margin: 100px 0 100px 100px;
     }
     .hero-edition-tag {
       display: inline-block;
@@ -235,7 +222,10 @@
 
     /* ─── ARTISTES ─────────────────────────────── */
     #artistes { background: var(--yellow); }
-
+    .artist-card a {
+      text-decoration: none;
+      color: inherit;
+    }
     .artists-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));

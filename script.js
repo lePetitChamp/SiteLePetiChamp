@@ -26,8 +26,13 @@ function cdHTML(t) {
 function revealCard(card) {
   card.classList.remove('mystery');
   const sat = card.dataset.sat ? ' sat' : '';
+  const link = card.dataset.link || '#';
   card.innerHTML = `
-    <div class="artist-img"><img src="${card.dataset.img}" alt="${card.dataset.name}"></div>
+    <div class="artist-img">
+      <a href="${link}" target="_blank" rel="noopener">
+        <img src="${card.dataset.img}" alt="${card.dataset.name}">
+      </a>
+    </div>
     <div class="artist-name">${card.dataset.name}</div>
     <div class="artist-genre">${card.dataset.genre}</div>
     <span class="artist-day${sat}">${card.dataset.day}</span>`;
@@ -94,3 +99,36 @@ document.querySelectorAll('.mobile-link').forEach(link => {
     mobileMenu.classList.remove('open');
   });
 });
+
+// Carrousel galerie
+(function() {
+  const track = document.getElementById('carousel-track');
+  if (!track) return;
+  const total = track.children.length;
+  const dotsEl = document.getElementById('carousel-dots');
+  let cur = 0;
+
+  for (let i = 0; i < total; i++) {
+    const d = document.createElement('div');
+    d.style.cssText = `width:10px;height:10px;border-radius:50%;cursor:pointer;background:${i===0?'var(--teal)':'var(--dark)'};transition:background .2s;`;
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    cur = (n + total) % total;
+    track.style.transform = `translateX(-${cur * 100}%)`;
+    dotsEl.querySelectorAll('div').forEach((d, i) =>
+      d.style.background = i === cur ? 'var(--yellow)' : 'var(--dark)');
+  }
+
+  window.carousel = (dir) => goTo(cur + dir);
+
+  // Swipe tactile
+  let sx = 0;
+  track.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const diff = sx - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) goTo(cur + (diff > 0 ? 1 : -1));
+  });
+})();
